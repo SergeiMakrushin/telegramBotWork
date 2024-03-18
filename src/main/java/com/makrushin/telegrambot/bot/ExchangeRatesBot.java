@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 @Component
 public class ExchangeRatesBot extends TelegramLongPollingBot {
 
-    Logger logger = LoggerFactory.getLogger(ExchangeRatesBot.class);
+    private Logger logger = LoggerFactory.getLogger(ExchangeRatesBot.class);
 
     public ExchangeRatesBot(@Value("${bot.token}") String botToken) {
         super(botToken);
@@ -48,7 +48,7 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         String name = update.getMessage().getFrom().getFirstName();
         String startMessage = "Привет, " + name + "! отправь сообщение по образцу:" + SAMPLE;
         //проверка на команду start
-        if (message.equals("/start")||message.equals("start")) {
+        if (message.equals("/start") || message.equals("start")) {
             sendText(id, startMessage);
             return;
         }
@@ -90,13 +90,13 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         List<NotificationTask> taskList = notificationTaskRepository.findNotificationTaskByTimeMessage(newTime);
         //передаем в метод для отправки сообщений полученные объекты
         taskList.stream()
-                .forEach(s -> sendText(s.getUserId(), s.getMessage()));
+                .forEach(notificationTask -> sendText(notificationTask.getUserId(), notificationTask.getMessage()));
 
         return notificationTaskRepository.findNotificationTaskByTimeMessage(newTime);
     }
 
     // Метод отправляет сообщение пользователю
-    public void sendText(Long id, String message) {
+    public String sendText(Long id, String message) {
         logger.info("метод отправки сообщения пользователю");
 
         SendMessage sendMessage = new SendMessage();
@@ -107,28 +107,13 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             logger.error("ошибка отправки сообщения");
         }
+        return message;
     }
 
 
     @Override
     public String getBotUsername() {
         return "mak_s_work_bot";
-    }
-
-    // Метод отправляет сообщение пользователю через контроллер
-    public String getText(Long id, String message) {
-        logger.info("метод отправки сообщения пользователю, через controller");
-
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(id);
-        sendMessage.setText(message);
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-             logger.error("ошибка отправки сообщения");
-        }
-
-        return message;
     }
 
 

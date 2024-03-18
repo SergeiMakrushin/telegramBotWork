@@ -17,6 +17,6 @@ public class BotController {
     // Метод отправляет сообщение пользователю через swagger
     @GetMapping
     public String botMessage(@RequestParam("id") Long id, @RequestParam("message") String message) {
-        return exchangeRatesBot.getText(id, message);
+        return exchangeRatesBot.sendText(id, message);
     }
 }

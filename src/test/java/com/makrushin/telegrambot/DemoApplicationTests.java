@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.makrushin.telegrambot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class TelegrambotApplicationTests {
 
 	@Test
 	void contextLoads() {

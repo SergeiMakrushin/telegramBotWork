@@ -1,7 +1,6 @@
-package com.makrushin.telegrambot.repositiry;
+package com.makrushin.telegrambot.repository;
 
 import com.makrushin.telegrambot.model.NotificationTask;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
